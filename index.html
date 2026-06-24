@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AURA | Neural Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@200;300;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css">
+  </head>
+  <body>
+    <!-- Spatial Holographic Environment -->
+    <div class="mesh-universe">
+      <div class="core-glow" id="core-glow"></div>
+    </div>
+    <div class="noise"></div>
+
+    <div id="app">
+      <main class="container">
+        
+        <header class="app-header intro-fade">
+          <div class="brand-pill">
+            <span class="icon">✦</span>
+            <span class="text">Aura WebAssembly</span>
+          </div>
+          <h1 class="hero-title">Decode the <br/> <span class="hero-gradient">human emotion.</span></h1>
+          <p class="hero-subtitle">High-fidelity local sentiment processing.</p>
+        </header>
+
+        <section class="input-section intro-fade" style="animation-delay: 0.15s;">
+          <div class="spatial-panel input-panel" id="input-panel">
+            <textarea id="text-input" placeholder="Initiate sentiment scan..." rows="3" spellcheck="false"></textarea>
+            <div class="input-footer">
+              <span class="meta-info" id="char-count">0 B</span>
+              <button id="analyze-btn" class="spatial-btn" disabled>
+                <div class="btn-content">
+                  <span class="btn-text" id="btn-text">Booting</span>
+                  <div class="spinner-mini hidden" id="btn-spinner"></div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="output-section hidden" id="output-section">
+           <div class="spatial-panel result-panel" id="result-panel">
+              <div class="result-content">
+                 <div class="hologram-ring">
+                   <svg viewBox="0 0 130 130" class="svg-ring">
+                     <circle class="ring-bg" cx="65" cy="65" r="60"></circle>
+                     <circle class="ring-fill" id="ring-fill" cx="65" cy="65" r="60"></circle>
+                   </svg>
+                   <div class="ring-center">
+                     <span class="score-value" id="confidence-percentage">0%</span>
+                     <span class="score-label">SYNC</span>
+                   </div>
+                 </div>
+                 <div class="sentiment-details">
+                   <h3 class="sentiment-prefix">Neural Classification</h3>
+                   <h2 id="sentiment-label" class="sentiment-title">...</h2>
+                 </div>
+              </div>
+           </div>
+        </section>
+
+      </main>
+
+      <!-- Creator HUD Watermark -->
+      <div class="creator-watermark intro-fade" style="animation-delay: 0.3s;">
+        <span class="watermark-role">SYS_ARCHITECT</span>
+        <span class="watermark-separator">//</span>
+        <span class="watermark-name">JARNAIL SINGH (JAXS)</span>
+      </div>
+
+      <!-- Advanced OS Boot Screen -->
+      <div id="loading-overlay" class="boot-os">
+        <div class="boot-container">
+          <div class="os-brand">AURA-OS v1.0</div>
+          <div class="boot-terminal">
+            <div class="log-line">> root access granted: JARNAIL SINGH (JAXS)</div>
+            <div class="log-line">> mapping unified memory...</div>
+            <div class="log-line">> fetching <span id="download-file-name" class="highlight">weights.onnx</span></div>
+            
+            <div class="progress-container">
+              <div class="progress-bar-fill" id="download-progress-fill"></div>
+            </div>
+            
+            <div class="status-footer">
+              <span id="download-percentage">0% ALLOCATED</span>
+              <span class="cursor-blink">█</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
