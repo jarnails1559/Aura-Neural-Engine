@@ -100,6 +100,25 @@ worker.addEventListener('message', (event) => {
         
     } else if (message.type === 'error') {
          console.error("Worker Error details:", message.error);
+
+         // Surface the real failure ON the boot screen instead of hanging at
+         // 100% — critical for diagnosing mobile, where the console isn't reachable.
+         elements.downloadFileName.innerText = 'FATAL';
+         elements.downloadPercentage.innerText = 'NEURAL ENGINE FAILURE';
+         elements.downloadProgressFill.style.background = '#FF0055';
+         elements.downloadProgressFill.style.boxShadow = '0 0 20px #FF0055';
+
+         const terminal = document.querySelector('.boot-terminal');
+         if (terminal) {
+             const line = document.createElement('div');
+             line.className = 'log-line';
+             line.style.color = '#FF0055';
+             line.style.wordBreak = 'break-word';
+             line.style.marginTop = '1rem';
+             line.innerText = '> ' + (message.error || 'unknown error');
+             terminal.appendChild(line);
+         }
+
          elements.btnText.innerText = 'Neural Engine Failure';
          elements.btnSpinner.classList.add('hidden');
     }

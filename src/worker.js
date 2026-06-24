@@ -3,6 +3,14 @@ import { pipeline, env } from '@xenova/transformers';
 env.allowLocalModels = false;
 env.useBrowserCache = true;
 
+// --- iOS / WebKit stability ---
+// iOS Safari (which every iOS browser, including "Chrome", runs on) has tight
+// WASM memory and threading limits. Force single-threaded ONNX so model init
+// doesn't get OOM-killed after the download completes.
+try {
+    env.backends.onnx.wasm.numThreads = 1;
+} catch (_) { /* older builds may not expose this — safe to ignore */ }
+
 class PipelineSingleton {
     static task = 'sentiment-analysis';
     static model = 'Xenova/twitter-roberta-base-sentiment-latest';
@@ -26,7 +34,7 @@ self.addEventListener('message', async (event) => {
             });
             self.postMessage({ type: 'ready' });
         } catch (e) {
-            self.postMessage({ type: 'error', error: e.message });
+            self.postMessage({ type: 'error', error: `[load] ${e?.name || 'Error'}: ${e?.message || String(e)}` });
         }
     } else if (event.data.type === 'predict') {
         const text = event.data.text;
@@ -35,7 +43,7 @@ self.addEventListener('message', async (event) => {
             const output = await classifier(text);
             self.postMessage({ type: 'result', output });
         } catch (e) {
-            self.postMessage({ type: 'error', error: e.message });
+            self.postMessage({ type: 'error', error: `[predict] ${e?.name || 'Error'}: ${e?.message || String(e)}` });
         }
     }
 });
